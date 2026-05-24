@@ -1,0 +1,62 @@
+{% include "core/header.html" %} {% load static %} {% if messages %}
+<div class="container mt-2">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+<section class="py-5" style="background-color: #f8f9fa">
+  <div class="container">
+    <div class="row g-4">
+      {% for item in properties %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm rounded-4 overflow-hidden">
+          <div class="position-relative">
+            {% if item.image %}
+            <img
+              src="{{ item.image.url }}"
+              class="card-img-top"
+              style="height: 220px; object-fit: cover" />
+            {% else %}
+            <img src="{% static 'images/default.jpg' %}" class="card-img-top" />
+            {% endif %}
+          </div>
+
+          <div class="card-body">
+            <small class="text-muted">
+              <i class="bi bi-geo-alt-fill text-primary"></i>
+              {{ item.city }}, {{item.area}}
+            </small>
+
+            <h5 class="fw-bold">{{ item.name }}</h5>
+
+            <ul class="d-flex gap-4" style="margin-left: -30px">
+              <li style="list-style: none">
+                {% if item.wifi %} WiFi {% else %} No WiFi {% endif %}
+              </li>
+              <li>{% if item.food %} Food {% else %} No Food {% endif %}</li>
+            </ul>
+
+            <a
+              href="{{ item.url }}"
+              class="btn btn-outline-primary btn-sm rounded-pill">
+              Details
+            </a>
+
+            {% if item.type == "pg" %}
+            <span class="badge bg-success ms-2">PG</span>
+            {% else %}
+            <span class="badge bg-success ms-2">Hostel</span>
+            {% endif %} {% if item.type == "pg" %}
+            <span class="badge bg-info ms-2">{{item.gender}} PG</span>
+            {% else %}
+            <span class="badge bg-info ms-2">{{item.gender}} Hostel</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% include "core/footer.html" %}

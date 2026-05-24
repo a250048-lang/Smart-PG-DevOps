@@ -1,0 +1,82 @@
+{% include "owner/owner_header.html" %} {% load static %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">
+          <i class="bi bi-building"></i> Select Property Type
+        </h4>
+      </div>
+      <div class="card-body">
+        <p class="text-muted mb-4">
+          Choose the type of property you want to add to your portfolio.
+        </p>
+
+        <form method="POST">
+          {% csrf_token %}
+
+          <div class="mb-4">
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="property_type"
+                id="pg"
+                value="pg"
+                checked />
+              <label class="form-check-label" for="pg">
+                <strong>PG (Paying Guest)</strong>
+                <br />
+                <small class="text-muted"
+                  >Add a Paying Guest accommodation property</small
+                >
+              </label>
+            </div>
+
+            <div class="form-check mb-3">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="property_type"
+                id="hostel"
+                value="hostel" />
+              <label class="form-check-label" for="hostel">
+                <strong>Hostel</strong>
+                <br />
+                <small class="text-muted">Add a hostel property</small>
+              </label>
+            </div>
+
+            <!-- <div class="form-check mb-4">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="property_type"
+                id="room"
+                value="room" />
+              <label class="form-check-label" for="room">
+                <strong>Individual Rooms</strong>
+                <br />
+                <small class="text-muted"
+                  >Add individual rooms for rent (Coming Soon)</small
+                >
+              </label>
+            </div> -->
+          </div>
+
+          <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="bi bi-arrow-right-circle"></i> Continue
+            </button>
+            <a
+              href="{% url 'owner:manage_properties' %}"
+              class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left"></i> Back to Properties
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% include "owner/owner_footer.html" %}

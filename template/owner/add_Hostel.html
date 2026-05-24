@@ -1,0 +1,347 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/add_Hostel.css' %}" />
+{% include "core/header.html" %}
+<style>
+  .card {
+    background: #ffffff;
+    border-radius: 16px;
+  }
+
+  form label {
+    font-size: 14px;
+    color: #333;
+  }
+
+  /* Do not apply to buttons */
+  textarea,
+  input:not([type='submit']) {
+    border-radius: 8px !important;
+  }
+
+  /* Final Button Styling */
+  button.submit-btn {
+    background-color: #ffc107 !important;
+    color: #000 !important;
+    padding: 12px 40px !important;
+    border-radius: 8px !important;
+    border: none !important;
+    font-size: 16px !important;
+    transition: 0.3s;
+    display: inline-block !important;
+  }
+
+  button.submit-btn:hover {
+    background-color: #ffb300 !important;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 16px rgba(255, 193, 7, 0.4);
+  }
+</style>
+<div class="container py-5">
+  <div class="card shadow-lg p-4" style="border-radius: 14px">
+    <h3 class="fw-bold mb-4 text-center">Add Hostel Details</h3>
+
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <!-- Hostel Name -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold"
+          >Hostel Name <span style="color: red">*</span></label
+        >
+        <input type="text" class="form-control" name="hostel_name" required />
+      </div>
+
+      <!-- Address Fields -->
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >Street <span style="color: red">*</span></label
+          >
+          <input type="text" class="form-control" name="street" required />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >Area / Road <span style="color: red">*</span></label
+          >
+          <input type="text" class="form-control" name="area" required />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >Village <span style="color: red">*</span></label
+          >
+          <input type="text" class="form-control" name="village" />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >City <span style="color: red">*</span></label
+          >
+          <input type="text" class="form-control" name="city" required />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label fw-semibold"
+            >District <span style="color: red">*</span></label
+          >
+          <input type="text" class="form-control" name="district" required />
+        </div>
+
+        <div class="col-md-4">
+          <label class="form-label fw-semibold"
+            >State <span style="color: red">*</span></label
+          >
+          <input type="text" class="form-control" name="state" required />
+        </div>
+
+        <div class="col-md-2">
+          <label class="form-label fw-semibold">
+            Pincode <span style="color: red">*</span>
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            name="pincode"
+            required
+            pattern="^[1-9][0-9]{5}$"
+            maxlength="6"
+            minlength="6"
+            title="Enter a valid 6-digit pincode" />
+        </div>
+      </div>
+
+      <!-- Gender Category -->
+      <div class="mt-4">
+        <label class="form-label fw-semibold"
+          >Gender <span style="color: red">*</span></label
+        >
+        <select class="form-select" name="gender" required>
+          <option disabled selected>Choose Gender Category</option>
+          <option value="Male">Boys Hostel</option>
+          <option value="Female">Girls Hostel</option>
+          <option value="Both">Both Girls & Boys Hostel</option>
+        </select>
+      </div>
+
+      <!-- Facilities Section -->
+      <div class="mt-4">
+        <label class="form-label fw-semibold mb-2">Facilities Included</label>
+
+        <div class="row">
+          <!-- Column 1 -->
+          <div class="col-md-4">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="wifi" />
+              <label class="form-check-label fw-semibold">High-Speed WiFi</label
+              ><br />
+              <small class="text-muted ms-4">24/7 internet access</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="food" />
+              <label class="form-check-label fw-semibold">Meals Included</label
+              ><br />
+              <small class="text-muted ms-4">Healthy & hygienic food</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="laundry" />
+              <label class="form-check-label fw-semibold">Laundry Service</label
+              ><br />
+              <small class="text-muted ms-4">Clean And Maintain</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="gym" />
+              <label class="form-check-label fw-semibold"
+                >Gym / Fitness Area</label
+              ><br />
+              <small class="text-muted ms-4">Fitness Life</small>
+            </div>
+          </div>
+
+          <!-- Column 2 -->
+          <div class="col-md-4">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="security" />
+              <label class="form-check-label fw-semibold">Secure Living</label
+              ><br />
+              <small class="text-muted ms-4">CCTV & gated access</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="housekeeping" />
+              <label class="form-check-label fw-semibold">Housekeeping</label
+              ><br />
+              <small class="text-muted ms-4">Clean & hygienic rooms</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="ro_water" />
+              <label class="form-check-label fw-semibold"
+                >RO Drinking Water</label
+              ><br />
+              <small class="text-muted ms-4">Trusted filtered water</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="games" />
+              <label class="form-check-label fw-semibold"
+                >Indoor Games Room</label
+              ><br />
+              <small class="text-muted ms-4">Play Fun</small>
+            </div>
+          </div>
+
+          <!-- Column 3 -->
+          <div class="col-md-4">
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="hotwater" />
+              <label class="form-check-label fw-semibold"
+                >Hot & Cold Water</label
+              ><br />
+              <small class="text-muted ms-4">As per need (Comfort)</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="parking" />
+              <label class="form-check-label fw-semibold">Vehicle Parking</label
+              ><br />
+              <small class="text-muted ms-4">Two-wheeler parking space</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input class="form-check-input" type="checkbox" name="wardrobe" />
+              <label class="form-check-label fw-semibold"
+                >Wardrobe / Storage</label
+              ><br />
+              <small class="text-muted ms-4">For personal belongings</small>
+            </div>
+
+            <div class="form-check mb-2">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                name="studytable" />
+              <label class="form-check-label fw-semibold"
+                >Study Table & Chair</label
+              ><br />
+              <small class="text-muted ms-4">Suitable for students</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mt-4">
+        <label class="form-label fw-semibold"
+          >Description <span style="color: red">*</span></label
+        >
+        <textarea
+          class="form-control"
+          rows="4"
+          name="description"
+          required
+          placeholder="Example:
+• Furnished rooms with beds & study tables
+• Breakfast & Dinner included
+• CCTV, Wi-Fi and separate washing area
+• Near campus and market
+• Suitable for students and professionals"></textarea>
+      </div>
+
+      <!-- Rules Table -->
+      <div class="mt-4">
+        <label class="form-label fw-semibold"
+          >Rules for Hostel <span style="color: red">*</span></label
+        >
+        <table class="table table-bordered" id="rulesTable">
+          <tbody>
+            <tr>
+              <td>
+                <input
+                  type="text"
+                  name="rules[]"
+                  class="form-control"
+                  placeholder="Enter a rule"
+                  required />
+              </td>
+              <td class="text-center" style="width: 50px">
+                <button type="button" class="btn btn-danger btn-sm remove-rule">
+                  X
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <button type="button" class="btn btn-secondary btn-sm" id="addRuleBtn">
+          + Add Rule
+        </button>
+      </div>
+      <!-- Title / Cover Image -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">
+          Title / Cover Image <span style="color: red">*</span>
+        </label>
+        <input
+          type="file"
+          class="form-control"
+          name="title_image"
+          accept="image/*"
+          required />
+      </div>
+
+      <!-- Gallery Images -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold"> Gallery Images </label>
+
+        <input
+          type="file"
+          class="form-control"
+          name="gallery_images"
+          accept="image/*"
+          multiple />
+
+        <small class="text-muted"> You can upload multiple images here. </small>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="text-center mt-4">
+        <button type="submit" class="submit-btn fw-bold">
+          Submit for Verification
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% include "core/footer.html" %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const rulesTable = document.querySelector('#rulesTable tbody');
+    const addRuleBtn = document.getElementById('addRuleBtn');
+
+    addRuleBtn.addEventListener('click', () => {
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+            <td><input type="text" name="rules[]" class="form-control" placeholder="Enter a rule" required></td>
+            <td class="text-center" style="width: 50px;">
+                <button type="button" class="btn btn-danger btn-sm remove-rule">X</button>
+            </td>`;
+      rulesTable.appendChild(newRow);
+    });
+
+    rulesTable.addEventListener('click', function (event) {
+      if (event.target.classList.contains('remove-rule')) {
+        event.target.closest('tr').remove();
+      }
+    });
+  });
+</script>

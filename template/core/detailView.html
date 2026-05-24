@@ -1,0 +1,440 @@
+{% include "core/header.html" %}{% load static %} {% if messages %}
+<div class="container mt-2">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+
+<style>
+  :root {
+    --pg-primary: #0d6efd;
+    --pg-bg: #f8f9fa;
+  }
+
+  body {
+    background-color: var(--pg-bg);
+  }
+
+  /* Hero Image Section */
+  .hero-container {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .hero-image-wrapper {
+    height: 450px;
+    position: relative;
+  }
+
+  .hero-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Sticky Sidebar for desktop */
+  @media (min-width: 992px) {
+    .sticky-sidebar {
+      position: sticky;
+      top: 20px;
+    }
+  }
+
+  /* Badge Styling */
+  .amenity-pill {
+    background: #e9ecef;
+    color: #495057;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+  }
+
+  .amenity-pill:hover {
+    background: #dee2e6;
+  }
+
+  /* Mobile Table Optimization */
+  @media (max-width: 768px) {
+    .hero-image-wrapper {
+      height: 250px;
+    }
+    .table-responsive-stack tr {
+      display: block;
+      border-bottom: 2px solid #eee;
+      margin-bottom: 10px;
+    }
+  }
+</style>
+
+<section class="py-4 py-md-5">
+  <div class="container">
+    <div class="hero-container mb-5">
+      <div class="row g-0">
+        <div class="col-lg-8 hero-image-wrapper">
+          <div
+            id="gallerySlider"
+            class="carousel slide"
+            data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <!-- Always show title image first -->
+              <div class="carousel-item active">
+                <img
+                  src="{{ pg.title_image.url }}"
+                  class="d-block w-100"
+                  style="height: 450px; object-fit: cover" />
+              </div>
+
+              <!-- Show gallery images only if present -->
+              {% for img in gallery %}
+              <div class="carousel-item">
+                <img
+                  src="{{ img.image.url }}"
+                  class="d-block w-100"
+                  style="height: 450px; object-fit: cover" />
+              </div>
+              {% endfor %}
+            </div>
+
+            {% if gallery %}
+            <!-- Show controls only when there are extra images -->
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#gallerySlider"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#gallerySlider"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
+            {% endif %}
+          </div>
+        </div>
+
+        <div
+          class="col-lg-4 p-4 p-md-5 d-flex flex-column justify-content-center">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active">PG Details</li>
+            </ol>
+          </nav>
+
+          <h2 class="fw-bold mb-3">{{ pg.name }}</h2>
+          <p class="text-muted mb-4">
+            <i class="bi bi-geo-alt-fill text-primary"></i> {{pg.full_address }}
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            <span class="amenity-pill">
+              <i class="bi bi-gender-ambiguous"></i>
+              {{ pg.get_gender_availability_display }}
+            </span>
+            <span class="amenity-pill">
+              <i class="bi bi-wifi"></i> {% if pg.has_wifi %} WiFi Available
+              {%else%} No WiFi {% endif %}
+            </span>
+            <span class="amenity-pill">
+              <i class="bi bi-egg-fried"></i> {% if pg.has_food %} Food Included
+              {% else %} No Food Included {% endif %}
+            </span>
+          </div>
+
+          <!-- {% if pg.description %}
+          <p class="text-secondary mb-0">
+            {{ pg.description|truncatewords:40 }}
+          </p>
+          {% endif %} -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="fw-bold mb-0">Available Rooms</h4>
+            <span class="badge bg-primary-soft text-primary"
+              >{{ rooms|length }} Room</span
+            >
+          </div>
+
+          {% if rooms %}
+          <div class="table-responsive">
+            <table class="table align-middle">
+              <thead class="table-light">
+                <tr>
+                  <th>Room No.</th>
+                  <th>Type</th>
+                  <th>Availability</th>
+                  <th>Price</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for room in rooms %}
+                <tr>
+                  <td>
+                    <span class="fw-bold">{{ room.room_number }}</span>
+                    <div class="small text-muted">
+                      {{ room.capacity }} Sharing
+                    </div>
+                  </td>
+                  <td>
+                    <span
+                      class="badge {% if room.is_ac %}bg-info{% else %}bg-secondary{% endif %}">
+                      {{ room.is_ac|yesno:"AC,Non-AC" }}
+                    </span>
+                  </td>
+                  <td>
+                    {% if room.available_beds > 0 %}
+                    <span class="text-success small fw-bold"
+                      ><i class="bi bi-check-circle"></i>
+                      {{room.available_beds}} Beds left</span
+                    >
+                    {% else %}
+                    <span class="text-danger small fw-bold"
+                      ><i class="bi bi-x-circle"></i> Sold Out</span
+                    >
+                    {% endif %}
+                  </td>
+                  <td>
+                    <span class="fw-bold text-dark"
+                      >₹{{ room.price_per_month }}</span
+                    ><small class="text-muted">/mon</small>
+                  </td>
+                  <td>
+                    {% if room.id in pending_room_ids %}
+                    <button class="btn btn-warning" disabled>
+                      Pending
+                    </button>
+                    {% elif room.available_beds > 0 %}
+                      {% if user.is_authenticated %}
+                      <button
+                        class="btn btn-primary"
+                        data-bs-toggle="modal"
+                        data-bs-target="#bookingFormModal_{{ room.id }}">
+                        Book
+                      </button>
+                      {% else %}
+                      <a
+                        href="{% url 'user:user_login' %}"
+                        class="btn btn-primary">
+                        Book
+                      </a>
+                      {% endif %}
+                    {% else %}
+                    <button class="btn btn-light btn-sm px-3 rounded-pill" disabled>
+                      Full
+                    </button>
+                    {% endif %}
+                  </td>
+                </tr>
+
+                <div class="modal fade" id="bookingFormModal_{{ room.id }}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <form method="POST" action="{% url 'owner:book_room' room.id %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="modal-header text-dark">
+                          <h5 class="modal-title">Booking Details - Room {{ room.room_number }}</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-dark">
+                          {% if messages %}
+                          <div class="mb-3">
+                            {% for message in messages %}
+                            <div
+                              class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show py-2 mb-2 small"
+                              role="alert">
+                              {{ message }}
+                              <button type="button" class="btn-close py-2" data-bs-dismiss="alert"></button>
+                            </div>
+                            {% endfor %}
+                          </div>
+                          {% endif %}
+                          <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input name="full_name" class="form-control" required placeholder="Enter your full name"
+                              pattern="[A-Za-z\s]{2,}" title="Minimum 2 characters, alphabets and spaces only" />
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col">
+                              <label class="form-label">Age</label>
+                              <input name="age" class="form-control" type="number" required min="16" max="50" />
+                            </div>
+                            <div class="col">
+                              <label class="form-label">Gender</label>
+                              <select name="gender" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input type="tel" name="phone" class="form-control" required pattern="[6789][0-9]{9}"
+                              maxlength="10" title="10 digit number starting with 6, 7, 8 or 9" />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input name="email" class="form-control gmail-check" type="email" required
+                              pattern=".+@gmail\.com$" title="Only @gmail.com addresses are accepted"
+                              oninput="validateRoomGmail(this)" />
+                            <div class="gmail-error text-danger small mt-1" style="display: none;">
+                              Only @gmail.com email addresses are allowed.
+                            </div> 
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Message (optional)</label>
+                            <textarea name="message" class="form-control" rows="3"></textarea>
+                          </div>
+
+                          <div class="mb-3">
+                            <label class="form-label text-dark">Identity Proof (JPEG, Max 3MB)</label>
+                            <input type="file" name="identity_proof" class="form-control" accept="image/jpeg" required />
+                            <div class="form-text text-muted small">Upload Aadhar/Passport/PAN. JPEG only.</div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                          <button class="btn btn-success px-4" type="submit">Submit Request</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <div class="text-center py-4">
+            <i class="bi bi-house-exclamation display-4 text-muted"></i>
+            <p class="mt-2">No rooms available at the moment.</p>
+          </div>
+          {% endif %}
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+          <h4 class="fw-bold mb-4">Amenities & Facilities</h4>
+          <div class="row g-3">
+            {% if pg.has_parking %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-p-circle text-primary fs-4 mb-2"></i> Parking
+                <span class="small fw-semibold"> Parking</span>
+              </div>
+            </div>
+            {% endif %} {% if pg.has_laundry %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-basket text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold">Laundry</span>
+              </div>
+            </div>
+            {% endif %} {% if pg.has_gym %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-activity text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold">Gym Facility</span>
+              </div>
+            </div>
+            {% endif %} {% if pg.has_power_backup %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-lightning-charge text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold">Power Backup</span>
+              </div>
+            </div>
+            {% endif %} {% if pg.has_security %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-shield-check text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold">Security</span>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+
+          <h4 class="fw-bold mt-5 mb-3">About this Property</h4>
+          <p class="text-secondary leading-relaxed">{{ pg.description }}</p>
+        </div>
+
+        <!-- <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+          <div class="p-4"><h4 class="fw-bold mb-0">Location</h4></div>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14588.798465471687!2d73.8107430960413!3d15.90624986798652!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bbff5c417685d95%3A0x35c2caecef7eac43!2sMalvani%20Guest%20House!5e1!3m2!1sen!2sin!4v1766909650744!5m2!1sen!2sin"
+            width="100%"
+            height="350"
+            style="border: 0"
+            loading="lazy"></iframe>
+        </div> -->
+      </div>
+
+      <div class="col-lg-4">
+        <div class="sticky-sidebar">
+          <div
+            class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-dark text-white">
+            <h5 class="fw-bold mb-4">Interested? Contact Us</h5>
+            <p class="mb-2">
+              <i class="bi bi-telephone me-2"></i>
+              {{ pg.contact_number|default:"Not Available" }}
+            </p>
+
+            <p class="mb-4">
+              <i class="bi bi-envelope me-2"></i>
+              {{ pg.email|default:"Not Available" }}
+            </p>
+
+            {% if pg.contact_number %}
+            <a
+              href="tel:{{ pg.contact_number }}"
+              class="btn btn-success btn-lg w-100 rounded-3 mb-2">
+              <i class="bi bi-telephone me-2"></i>Call Now
+            </a>
+            {% endif %}
+          </div>
+
+          <div class="card border-0 shadow-sm rounded-4 p-4">
+            <h5 class="fw-bold mb-3">House Rules</h5>
+            {% if pg.rules %}
+            <ul class="list-unstyled mb-0">
+              {% for rule in pg.rules.splitlines %}
+              <li class="mb-2 d-flex align-items-start">
+                <i class="bi bi-info-circle text-primary me-2 mt-1"></i>
+                <span>{{ rule }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">No rules added.</p>
+            {% endif %}
+          </div>
+
+          <a
+            href="javascript:history.back()"
+            class="btn btn-link text-decoration-none text-muted mt-4">
+            <i class="bi bi-arrow-left"></i> Go back to listings
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "core/footer.html" %}

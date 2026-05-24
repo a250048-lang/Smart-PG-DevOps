@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
+
+
+<footer class="bg-dark text-white py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <h5 class="text-warning mb-3">RoomMate</h5>
+        <p class="text-secondary small">
+          Making student and professional accommodation simple, smart, and
+          secure.
+        </p>
+      </div>
+      <div class="col-md-2">
+        <h6 class="fw-bold mb-3">Quick Links</h6>
+        <ul class="list-unstyled text-secondary small">
+          <li class="mb-2">
+            <a href="{% url 'core:home' %}" class="text-decoration-none text-secondary">Home</a>
+          </li>
+          <li class="mb-2">
+            <a href="/" class="text-decoration-none text-secondary">Browse Rooms</a>
+          </li>
+          <li class="mb-2">
+            <a href="{% url 'core:about' %}" class="text-decoration-none text-secondary">About Us</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <h6 class="fw-bold mb-3">Support</h6>
+        <ul class="list-unstyled text-secondary small">
+          <li class="mb-2">
+            <a href="{% url 'core:help_center' %}" class="text-decoration-none text-secondary">Help Center</a>
+          </li>
+          <li class="mb-2">
+            <a href="{% url 'core:terms' %}" class="text-decoration-none text-secondary">Terms of Service</a>
+          </li>
+          <li class="mb-2">
+            <a href="{% url 'core:privacy' %}" class="text-decoration-none text-secondary">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6 class="fw-bold mb-3">Links</h6>
+        <div class="fs-3">
+          <a href="https://www.instagram.com/?hl=en"><i class="bi bi-instagram me-3"></i></a><a
+            href="https://www.facebook.com/"><i class="bi bi-facebook me-3"></a></i><a href="https://x.com/"><i
+              class="bi bi-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr class="border-secondary my-4" />
+    <div class="text-center text-secondary small">
+      &copy; 2025 RoomMate. All rights reserved.
+    </div>
+  </div>
+
+</footer>

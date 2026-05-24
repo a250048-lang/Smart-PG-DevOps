@@ -1,0 +1,64 @@
+<div
+  class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden property-result-card">
+  <div class="card-img-wrapper">
+    {% if data.property.image %}
+    <img
+      src="{{ data.property.image.url }}"
+      class="card-img-top"
+      style="height: 200px; object-fit: cover" />
+    {% else %}
+    <div
+      class="bg-light d-flex align-items-center justify-content-center"
+      style="height: 200px">
+      <i class="fas fa-image text-muted fa-3x"></i>
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="card-body p-4">
+    <div class="location-info mb-2">
+      <i class="bi bi-geo-alt-fill text-primary me-2"></i>
+      <span class="text-secondary small fw-semibold"
+        >{{ data.property.city }} - {{ data.property.area }}</span
+      >
+    </div>
+
+    <h4 class="card-title fw-bold mb-2">{{ data.property.name }}</h4>
+
+    <div class="amenities-list mb-3">
+      <ul class="d-flex gap-4" style="margin-left: -30px">
+        <li style="list-style: none">
+          {% if data.property.has_wifi %} WiFi {% else %} No WiFi {% endif %}
+        </li>
+        <li>
+          {% if data.property.has_food %} Food {% else %} No Food {% endif %}
+        </li>
+      </ul>
+    </div>
+
+    <div class="d-flex align-items-center gap-2 mt-auto">
+      {% if data.type == 'pg' %}
+      <a
+        href="{% url 'core_urls:detailView' data.property.id %}"
+        class="btn btn-outline-primary btn-sm rounded-pill px-3"
+        >Details</a
+      >
+      {% else %}
+      <a
+        href="{% url 'core_urls:hostel_detail' data.property.id %}"
+        class="btn btn-outline-primary btn-sm rounded-pill px-3"
+        >Details</a
+      >
+      {% endif %}
+
+      <span class="badge bg-success px-2 py-1">{{ data.type|title }}</span>
+      {% if data.type == "pg" %}
+      <span class="badge bg-info text-white px-2 py-1">{{data.gender}} PG</span>
+      {% else %}
+      <span class="badge bg-info text-white px-2 py-1"
+        >{{data.gender}} Hostel</span
+      >
+      {% endif %}
+    </div>
+  </div>
+</div>

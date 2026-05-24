@@ -1,0 +1,151 @@
+{% include 'core/header.html' %}
+
+<style>
+    .tos-header {
+        background: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .tos-section {
+        margin-bottom: 2.5rem;
+    }
+
+    .tos-section h4 {
+        color: #333;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+    }
+
+    .section-number {
+        background: #0d6efd;
+        color: white;
+        width: 28px;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 0.85rem;
+        margin-right: 12px;
+    }
+
+    .legal-text {
+        color: #555;
+        line-height: 1.7;
+    }
+
+    .sticky-sidebar {
+        position: sticky;
+        top: 20px;
+    }
+</style>
+
+<section class="tos-header py-5">
+    <div class="container">
+        <h1 class="fw-bold">Terms of Service</h1>
+        <p class="text-muted mb-0">Last updated: December 2025</p>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-3 d-none d-lg-block">
+            <div class="sticky-sidebar">
+                <nav id="tos-nav" class="nav flex-column border-start border-2">
+                    <a class="nav-link text-dark fw-semibold" href="#section1">1. User Accounts</a>
+                    <a class="nav-link text-muted" href="#section2">2. Property Listings</a>
+                    <a class="nav-link text-muted" href="#section3">3. Payments</a>
+                    <a class="nav-link text-muted" href="#section4">4. Cancellations</a>
+                    <a class="nav-link text-muted" href="#section5">5. Code of Conduct</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="mb-4 alert alert-info border-0 shadow-sm">
+                <strong>Notice:</strong> By using RoomMate services, you agree to the following legally binding
+                conditions. Please read them carefully.
+            </div>
+
+            <div id="section1" class="tos-section">
+                <h4><span class="section-number">1</span> User Accounts & Verification</h4>
+                <div class="legal-text">
+                    <p>To access certain features, you must register for an account. You agree that:</p>
+                    <ul>
+                        <li>All user information provided must be accurate, current, and complete.</li>
+                        <li>Submission of fake details or impersonation may lead to immediate account suspension without
+                            notice.</li>
+                        <li>You are responsible for maintaining the confidentiality of your login credentials.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="section2" class="tos-section">
+                <h4><span class="section-number">2</span> Property Listings & Owners</h4>
+                <div class="legal-text">
+                    <p>RoomMate acts as a marketplace connecting students and owners. Therefore:</p>
+                    <ul>
+                        <li>Owners are solely responsible for the accuracy of property descriptions, pricing, and
+                            amenities.</li>
+                        <li>RoomMate reserves the right to remove any listing that is deemed misleading or fraudulent.
+                        </li>
+                        <li>Verified badges are issued based on provided documentation but do not constitute a physical
+                            site inspection.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="section3" class="tos-section">
+                <h4><span class="section-number">3</span> Payments & Service Fees</h4>
+                <div class="legal-text">
+                    <p>All financial transactions are governed by the following:</p>
+                    <ul>
+                        <li>Payments made through the platform are handled by secure, verified third-party gateways.
+                        </li>
+                        <li>RoomMate may charge a service fee for successful bookings, which will be disclosed prior to
+                            payment.</li>
+                        <li>We do not store your full credit card or bank account details on our servers.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="section4" class="tos-section">
+                <h4><span class="section-number">4</span> Cancellation & Refund Policy</h4>
+                <div class="legal-text">
+                    <p>Cancellations are subject to the specific policy chosen by the property owner at the time of
+                        listing:</p>
+                    <ul>
+                        <li><strong>Standard:</strong> Full refund if cancelled 7 days before move-in.</li>
+                        <li><strong>Strict:</strong> Non-refundable once the booking is confirmed by the owner.</li>
+                        <li>Refunds, if applicable, will be processed to the original payment method within 5-10
+                            business days.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="section5" class="tos-section">
+                <h4><span class="section-number">5</span> Prohibited Conduct</h4>
+                <div class="legal-text">
+                    <p>Users agree not to engage in any of the following:</p>
+                    <ul>
+                        <li>Using the platform to harass, abuse, or harm another person.</li>
+                        <li>Bypassing the platform to complete a booking to avoid service fees.</li>
+                        <li>Posting unauthorized commercial communications (spam).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="my-5">
+            <div class="text-center bg-light p-4 rounded shadow-sm">
+                <p class="mb-2">Need a physical copy of these terms?</p>
+                <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+                    <i class="bi bi-printer me-2"></i>Download / Print PDF
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'core/footer.html' %}

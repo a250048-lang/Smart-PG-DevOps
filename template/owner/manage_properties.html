@@ -1,0 +1,197 @@
+{% include "owner/owner_header.html" %} {% load static %}
+
+<div class="container mb-3">
+  <div class="mb-3">
+    <a href="{% url 'owner:select-property-type' %}" class="btn btn-primary">
+      <i class="bi bi-plus-circle"></i> Add Properties
+    </a>
+  </div>
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">My PG's</h5>
+    </div>
+    <div class="card-body">
+      {% if pg_properties %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>City</th>
+              <th>Status</th>
+              <th>Verified</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for property in pg_properties %}
+            <tr>
+              <td>{{ property.name }}</td>
+              <td>{{ property.city }}</td>
+              <td>
+                <span
+                  class="badge bg-{% if property.is_active %}success{% else %}secondary{% endif %}">
+                  {% if property.is_active %}Active{% else %}Inactive{% endif %}
+                </span>
+              </td>
+              <td>
+                <span
+                  class="badge bg-{% if property.is_verified %}success{% else %}warning{% endif %}">
+                  {% if property.is_verified %}Verified{% else %} Pending
+                  {%endif%}
+                </span>
+              </td>
+              <td>{{ property.created_at|date:"d M Y" }}</td>
+              <td>
+                <a
+                  href="{% url 'owner:add_rooms' property.id %}"
+                  class="btn btn-sm btn-info mb-1">
+                  <i class="bi bi-plus"></i> Add Rooms
+                </a>
+                <form
+                  method="POST"
+                  style="display: inline"
+                  onsubmit="return confirm('Are you sure?');">
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="property_id"
+                    value="{{ property.id }}" />
+                  <button
+                    type="submit"
+                    name="action"
+                    value="toggle_active"
+                    class="btn btn-sm btn-{% if property.is_active %}warning{% else %}success{% endif %} mb-1">
+                    {%if property.is_active%}Deactivate{%else%}Activate{%endif%}
+                  </button>
+                </form>
+                <form
+                  method="POST"
+                  style="display: inline"
+                  onsubmit="return confirm('Are you sure you want to delete this property?');">
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="property_id"
+                    value="{{ property.id }}" />
+                  <button
+                    type="submit"
+                    name="action"
+                    value="delete"
+                    class="btn btn-sm btn-danger">
+                    <i class="bi bi-trash"></i> Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      {% else %}
+      <p class="text-muted">
+        No properties found.
+        <a href="{% url 'owner:add_pg' %}">Add your first property</a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="card shadow-sm mt-4 mb-4">
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">My Hostels</h5>
+    </div>
+
+    <div class="card-body">
+      {% if hostels %}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>City</th>
+              <th>Status</th>
+              <th>Verified</th>
+              <th>Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for hostel in hostels %}
+            <tr>
+              <td>{{ hostel.name }}</td>
+              <td>{{ hostel.city }}</td>
+
+              <td>
+                <span
+                  class="badge bg-{% if hostel.is_active %}success{% else %}secondary{% endif %}">
+                  {% if hostel.is_active %}Active{% else %}Inactive{% endif %}
+                </span>
+              </td>
+
+              <td>
+                <span
+                  class="badge bg-{% if hostel.is_verified %}success{% else %}warning{% endif %}">
+                  {% if hostel.is_verified %}Verified{% else %}Pending{% endif%}
+                </span>
+              </td>
+
+              <td>{{ hostel.created_at|date:"d M Y" }}</td>
+
+              <td>
+                <form method="POST" style="display: inline">
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="property_id"
+                    value="{{ hostel.id }}" />
+                  <input type="hidden" name="property_type" value="hostel" />
+                  <button
+                    name="action"
+                    value="toggle_active"
+                    class="btn btn-sm btn-{% if hostel.is_active %}warning{% else %}success{% endif %} mb-1">
+                    {% if hostel.is_active %}Deactivate{%else%}Activate{%endif%}
+                  </button>
+                </form>
+
+                <form
+                  method="POST"
+                  style="display: inline"
+                  onsubmit="return confirm('Delete this hostel?');">
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="property_id"
+                    value="{{ hostel.id }}" />
+                  <input type="hidden" name="property_type" value="hostel" />
+                  <button
+                    name="action"
+                    value="delete"
+                    class="btn btn-sm btn-danger mb-1">
+                    Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% else %}
+      <p class="text-muted">
+        No hostels found.
+        <a href="{% url 'owner:add_hostel' %}">Add your first property</a>
+      </p>
+      {% endif %}
+    </div>
+  </div>
+  <div class="d-flex justify-content-end mt-3">
+    <a href="{% url 'owner:owner_dashboard' %}" class="btn btn-outline-primary">
+      Go to Dashboard
+    </a>
+  </div>
+</div>
+
+{% include "owner/owner_footer.html" %}

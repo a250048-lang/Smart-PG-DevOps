@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>RoomMate — Property Details</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <style>
+      body {
+        background: #fafafa;
+      }
+      .badge-sold {
+        background: #333;
+      }
+      .amenity-badge {
+        background: #f4f4f4;
+        border-radius: 20px;
+        padding: 8px 14px;
+      }
+      .card-shadow {
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        border-radius: 16px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAVBAR (reuse your existing one) -->
+
+    <div class="container my-5">
+      <!-- HERO SECTION -->
+      <div class="card card-shadow mb-4">
+        <div class="row g-0">
+          <div class="col-md-7">
+            <img
+              src="your-image-here.jpg"
+              class="img-fluid rounded-start"
+              style="height: 100%; object-fit: cover" />
+          </div>
+
+          <div class="col-md-5 p-4">
+            <span class="badge badge-sold text-white mb-2">Sold Out</span>
+
+            <h2 class="fw-bold">Rest House</h2>
+
+            <p class="text-muted"><i class="bi bi-geo-alt"></i> Sawantwadi</p>
+
+            <p>⭐ <strong>4.2</strong> (120 reviews)</p>
+
+            <div class="d-flex gap-2 my-3">
+              <span class="amenity-badge">WiFi</span>
+              <span class="amenity-badge">Food</span>
+              <span class="amenity-badge">Laundry</span>
+            </div>
+
+            <p class="mt-3">
+              Comfortable and affordable accommodation designed for students and
+              professionals. Safe, secure, and conveniently located.
+            </p>
+
+            <hr />
+
+            <div class="d-flex justify-content-between align-items-center">
+              <h4 class="fw-bold mb-0">₹4,500 / month</h4>
+
+              <button class="btn btn-primary btn-lg" disabled>
+                Booking Closed
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DETAILS SECTION -->
+      <div class="row">
+        <!-- LEFT -->
+        <div class="col-lg-8">
+          <div class="card card-shadow p-4 mb-4">
+            <h4 class="fw-bold mb-3">About this Property</h4>
+            <p>
+              This PG hostel offers clean rooms, home-style food, WiFi
+              connectivity, and friendly management. Best suited for working
+              professionals and students.
+            </p>
+          </div>
+
+          <div class="card card-shadow p-4 mb-4">
+            <h4 class="fw-bold mb-3">Amenities</h4>
+
+            <div class="row g-3">
+              <div class="col-6 col-md-4">
+                <span class="amenity-badge w-100 d-block text-center"
+                  >WiFi</span
+                >
+              </div>
+              <div class="col-6 col-md-4">
+                <span class="amenity-badge w-100 d-block text-center"
+                  >Food</span
+                >
+              </div>
+              <div class="col-6 col-md-4">
+                <span class="amenity-badge w-100 d-block text-center"
+                  >CCTV</span
+                >
+              </div>
+              <div class="col-6 col-md-4">
+                <span class="amenity-badge w-100 d-block text-center"
+                  >Power Backup</span
+                >
+              </div>
+              <div class="col-6 col-md-4">
+                <span class="amenity-badge w-100 d-block text-center"
+                  >Parking</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div class="card card-shadow p-4 mb-4">
+            <h4 class="fw-bold mb-3">Location</h4>
+            <iframe
+              src="YOUR_GOOGLE_MAP_LINK"
+              width="100%"
+              height="300"
+              style="border: 0"
+              loading="lazy"></iframe>
+          </div>
+        </div>
+
+        <!-- RIGHT SIDEBAR -->
+        <div class="col-lg-4">
+          <div class="card card-shadow p-4 mb-4">
+            <h5 class="fw-bold">Contact Details</h5>
+            <p class="mb-1"><strong>Owner:</strong> John Doe</p>
+            <p class="mb-1"><strong>Phone:</strong> 98765 43210</p>
+            <p><strong>Email:</strong> hostel@email.com</p>
+
+            <button class="btn btn-success w-100 mt-2">Call Now</button>
+          </div>
+
+          <div class="card card-shadow p-4">
+            <h5 class="fw-bold">House Rules</h5>
+            <ul>
+              <li>No smoking</li>
+              <li>No loud music after 10PM</li>
+              <li>Visitors allowed till 8PM</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

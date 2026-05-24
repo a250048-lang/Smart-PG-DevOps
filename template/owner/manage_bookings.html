@@ -1,0 +1,265 @@
+{% include "owner/owner_header.html" %}
+{% if messages %}
+<div class="container mt-2">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+<div class="container mt-3">
+  <!-- ================= PG BOOKINGS ===================== -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-primary text-white">
+      <h5 class="mb-0">My PG Bookings</h5>
+    </div>
+
+    <div class="card-body">
+      {% if pg_bookings %}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Guest</th>
+            <th>Property</th>
+            <th>Room</th>
+            <th>Booked On</th>
+            <th>Identity Proof</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for booking in pg_bookings %}
+          <tr>
+            <td>
+              <strong>
+                {{booking.full_name|default:booking.user.get_full_name|default:booking.user.username}} </strong
+              ><br />
+
+              <small class="text-muted">
+                📞 {{ booking.phone|default:"Not Provided" }}<br />
+                ✉️ {{ booking.email|default:"Not Provided" }}<br />
+                🎂 Age: {{ booking.age|default:"-" }}<br />
+                🚻 Gender: {{ booking.gender|default:"-" }}
+              </small>
+
+              {% if booking.message %}
+              <div class="mt-1">
+                <span class="badge bg-secondary">Message</span>
+                <p class="text-muted small mb-0">{{ booking.message }}</p>
+              </div>
+              {% endif %}
+            </td>
+
+            <td>{{ booking.room.pg_property.name }}</td>
+
+            <td>{{ booking.room.room_number }}</td>
+
+            <td>{{ booking.booking_date|date:"d M Y" }}</td>
+            <td>
+              {% if booking.identity_proof %}
+              <a href="{{ booking.identity_proof.url }}" target="_blank" class="btn btn-outline-info btn-sm">
+                <i class="fas fa-eye"></i> View
+              </a>
+              {% else %}
+              <span class="text-muted small">Not Uploaded</span>
+              {% endif %}
+            </td>
+
+            <td class="fw-bold text-primary">₹{{ booking.amount }}</td>
+            <td>
+              {% if booking.status == 'pending' %}
+              <span class="badge bg-warning text-dark">Pending</span>
+              {% elif booking.status == 'confirmed' %}
+              <span class="badge bg-success">Confirmed</span>
+              {% else %}
+              <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </td>
+
+            <td>
+              {% if booking.status == 'pending' %}
+              <form method="post" style="display: inline">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ booking.id }}" />
+                <button
+                  class="btn btn-success btn-sm"
+                  name="action"
+                  value="confirm">
+                  Confirm
+                </button>
+              </form>
+
+              <form method="post" style="display: inline">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ booking.id }}" />
+                <button
+                  class="btn btn-danger btn-sm"
+                  name="action"
+                  value="cancel">
+                  Cancel
+                </button>
+              </form>
+
+              {% elif booking.status == 'confirmed' %}
+              <form method="post" style="display: inline">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ booking.id }}" />
+                <button
+                  class="btn btn-danger btn-sm"
+                  name="action"
+                  value="cancel">
+                  Cancel
+                </button>
+              </form>
+              {% else %}
+              <span class="text-muted">No actions</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% else %}
+      <p class="text-muted">No PG bookings yet.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <!-- ================= HOSTEL BOOKINGS ===================== -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-header bg-success text-white">
+      <h5 class="mb-0">My Hostel Bookings</h5>
+    </div>
+
+    <div class="card-body">
+      {% if hostel_bookings %}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Guest Details</th>
+            <th>Hostel</th>
+            <th>Booked On</th>
+            <th>identity Proof</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {% for booking in hostel_bookings %}
+          <tr>
+            <td>
+              <strong
+                >{{booking.full_name|default:booking.user.get_full_name|default:booking.user.username}}</strong
+              ><br />
+
+              <small class="text-muted">
+                📞 {{ booking.phone|default:"Not Provided" }}<br />
+                ✉️ {{ booking.email|default:"Not Provided" }}<br />
+                🎂 Age: {{ booking.age|default:"-" }}<br />
+                🚻 Gender: {{ booking.gender|default:"-" }}
+              </small>
+
+              {% if booking.message %}
+              <div class="mt-1">
+                <span class="badge bg-secondary">Message</span>
+                <p class="text-muted small mb-0">{{ booking.message }}</p>
+              </div>
+              {% endif %}
+            </td>
+
+            <td>{{ booking.hostel.name }}</td>
+
+            <td>{{ booking.booking_date|date:"d M Y" }}</td>
+            <td>
+              {% if booking.identity_proof %}
+              <a href="{{ booking.identity_proof.url }}" target="_blank" class="btn btn-outline-info btn-sm">
+                <i class="fas fa-eye"></i> View
+              </a>
+              {% else %}
+              <span class="text-muted small">Not Uploaded</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if booking.status == 'pending' %}
+              <span class="badge bg-warning text-dark">Pending</span>
+              {% elif booking.status == 'confirmed' %}
+              <span class="badge bg-success">Confirmed</span>
+              {% else %}
+              <span class="badge bg-danger">Cancelled</span>
+              {% endif %}
+            </td>
+
+            <td>
+              {% if booking.status == 'pending' %}
+              <form method="post" style="display: inline">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ booking.id }}" />
+                <button
+                  class="btn btn-success btn-sm"
+                  name="action"
+                  value="confirm">
+                  Confirm
+                </button>
+              </form>
+
+              <form method="post" style="display: inline">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ booking.id }}" />
+                <button
+                  class="btn btn-danger btn-sm"
+                  name="action"
+                  value="cancel">
+                  Cancel
+                </button>
+              </form>
+
+              {% elif booking.status == 'confirmed' %}
+              <form method="post" style="display: inline">
+                {% csrf_token %}
+                <input
+                  type="hidden"
+                  name="booking_id"
+                  value="{{ booking.id }}" />
+                <button
+                  class="btn btn-danger btn-sm"
+                  name="action"
+                  value="cancel">
+                  Cancel
+                </button>
+              </form>
+              {% else %}
+              <span class="text-muted">No actions</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      {% else %}
+      <p class="text-muted">No hostel bookings yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% include "owner/owner_footer.html" %}

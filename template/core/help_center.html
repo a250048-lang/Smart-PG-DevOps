@@ -1,0 +1,118 @@
+{% include 'core/header.html' %}
+
+<style>
+    .help-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 0 0 50px 50px;
+    }
+
+    .search-box {
+        max-width: 600px;
+        margin: -30px auto 0;
+    }
+
+    .faq-card {
+        transition: all 0.3s ease;
+        border: 1px solid #eee !important;
+    }
+
+    .faq-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .accordion-button:not(.collapsed) {
+        background-color: transparent;
+        color: #0d6efd;
+        box-shadow: none;
+    }
+
+    .lottie-container {
+        max-width: 220px;
+        margin: auto;
+    }
+</style>
+
+<section class="help-header py-5">
+    <div class="container text-center" data-aos="fade-down">
+        <h1 class="fw-bold mb-3" style="font-family: 'Poppins', sans-serif;">How can we help?</h1>
+        <p class="text-muted fs-5 mb-4">Find solutions to common issues or explore our guides.</p>
+
+        <div class="lottie-container">
+            <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_wkebwzpz.json" background="transparent"
+                speed="1" loop autoplay>
+            </lottie-player>
+        </div>
+    </div>
+</section>
+
+<div class="container search-box px-4" data-aos="fade-up">
+    <div class="input-group input-group-lg shadow-sm">
+        <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" class="form-control border-0" placeholder="Search for answers...">
+    </div>
+</div>
+
+<div class="container py-5 mt-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h4 class="fw-bold mb-4">Frequently Asked Questions</h4>
+
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item faq-card mb-3 rounded-3 overflow-hidden shadow-sm" data-aos="fade-up">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold py-3" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq1">
+                            <i class="bi bi-house-door me-3 text-primary"></i> How do I book a room?
+                        </button>
+                    </h2>
+                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-secondary lh-lg">
+                            Booking is simple: Search verified PGs/hostels, send a booking request, wait for owner
+                            approval, and move in!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item faq-card mb-3 rounded-3 overflow-hidden shadow-sm" data-aos="fade-up"
+                    data-aos-delay="100">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold py-3" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq2">
+                            <i class="bi bi-shield-check me-3 text-primary"></i> How does verification work?
+                        </button>
+                    </h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-secondary lh-lg">
+                            To ensure safety, admins review all owner documents and room details thoroughly before they
+                            are approved for listing.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item faq-card mb-3 rounded-3 overflow-hidden shadow-sm" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed fw-semibold py-3" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq3">
+                            <i class="bi bi-headset me-3 text-primary"></i> Who handles complaints?
+                        </button>
+                    </h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body text-secondary lh-lg">
+                            Our dedicated support team and admins ensure quick resolution of any issues you might face.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5 p-5 bg-light rounded-4 border border-dashed" data-aos="zoom-in">
+                <h5>Still have questions?</h5>
+                <p class="text-muted">If you cannot find the answer you're looking for, please contact us.</p>
+                <a href="/contact" class="btn btn-primary px-4 py-2 mt-2 shadow-sm">Get in Touch</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% include 'core/footer.html' %}

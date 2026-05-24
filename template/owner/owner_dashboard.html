@@ -1,0 +1,151 @@
+{% include "owner/owner_header.html" %} {% load static %}
+<style>
+  .stat-card {
+    border-left: 4px solid;
+    transition: transform 0.2s;
+    height: 150px;
+  }
+  .stat-card:hover {
+    transform: translateY(-5px);
+  }
+  .stat-card.primary {
+    border-left-color: #007bff;
+  }
+  .stat-card.success {
+    border-left-color: #28a745;
+  }
+  .stat-card.warning {
+    border-left-color: #ffc107;
+  }
+  .stat-card.info {
+    border-left-color: #17a2b8;
+  }
+</style>
+
+<!-- Statistics Cards -->
+<div class="container mb-5 mt-4">
+  <div class="d-flex gap-3 mb-3">
+    <a href="{% url 'owner:manage_properties' %}" class="btn btn-primary">
+      <i class="bi bi-plus-circle"></i> Manage Properties
+    </a>
+
+    <a href="{% url 'owner:manage_bookings' %}" class="btn btn-primary">
+      <i class="bi bi-plus-circle"></i> Manage Bookings
+    </a>
+  </div>
+
+  <div class="row mb-4">
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card primary shadow-sm">
+        <div class="card-body">
+          <h6 class="text-muted">Total Properties</h6>
+          <h2>{{ total_properties }}</h2>
+          <small class="text-muted">{{ verified_properties }} verified</small>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card success shadow-sm">
+        <div class="card-body">
+          <h6 class="text-muted">Total Rooms</h6>
+          <h2>{{ total_rooms }}</h2>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 mb-3">
+      <div class="card stat-card warning shadow-sm">
+        <div class="card-body">
+          <h6 class="text-muted">Total Bookings</h6>
+          <h2>{{ total_bookings }}</h2>
+          <small class="text-muted">{{ pending_bookings }} pending</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row">
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">
+            <i class="bi bi-calendar-check"></i> Recent Bookings
+          </h5>
+        </div>
+        <div class="card-body">
+          {% if recent_bookings %}
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Room</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for booking in recent_bookings %}
+                <tr>
+                  <td>{{ booking.user.username }}</td>
+                  <td>{{ booking.room.room_number }}</td>
+                  <td>
+                    <span
+                      class="badge bg-{% if booking.status == 'confirmed' %}success{% elif booking.status == 'pending' %}warning{% else %}secondary{% endif %}"
+                      >{{ booking.status }}</span
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <a href="#" class="btn btn-sm btn-primary">View All</a>
+          {% else %}
+          <p class="text-muted">No recent bookings</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    
+    <div class="col-md-6 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+          <h5 class="mb-0">
+            <i class="bi bi-exclamation-triangle"></i> Recent Complaints
+          </h5>
+        </div>
+        <div class="card-body">
+          {% if recent_complaints %}
+          <div class="table-responsive">
+            <table class="table table-sm">
+              <thead>
+                <tr>
+                  <th>Subject</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for complaint in recent_complaints %}
+                <tr>
+                  <td>{{ complaint.subject|truncatewords:5 }}</td>
+                  <td>
+                    <span
+                      class="badge bg-{% if complaint.status == 'resolved' %}success{% elif complaint.status == 'open' %}danger{% else %}warning{% endif %}"
+                      >{{ complaint.status }}</span
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <a href="#" class="btn btn-sm btn-warning">View All</a>
+          {% else %}
+          <p class="text-muted">No recent complaints</p>
+          {% endif %}
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+{% include "owner/owner_footer.html" %}

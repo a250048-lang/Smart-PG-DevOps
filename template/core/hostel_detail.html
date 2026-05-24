@@ -1,0 +1,281 @@
+{% include "core/header.html" %}{% load static %} {% if messages %}
+<div class="container mt-2">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+{% endif %}
+<style>
+  :root {
+    --pg-primary: #0d6efd;
+    --pg-bg: #f8f9fa;
+  }
+  body {
+    background-color: var(--pg-bg);
+  }
+  .hero-container {
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+  .hero-image-wrapper {
+    height: 450px;
+    position: relative;
+  }
+  .hero-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (min-width: 992px) {
+    .sticky-sidebar {
+      position: sticky;
+      top: 20px;
+    }
+  }
+  .amenity-pill {
+    background: #e9ecef;
+    color: #495057;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+</style>
+
+<section class="py-4 py-md-5">
+  <div class="container">
+    <!-- HERO -->
+    <div class="hero-container mb-5">
+      <div class="row g-0">
+        <div class="col-lg-8 hero-image-wrapper">
+          <img src="{{ hostel.title_image.url }}" alt="{{ hostel.name }}" />
+        </div>
+
+        <div
+          class="col-lg-4 p-4 p-md-5 d-flex flex-column justify-content-center">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item active">Hostel Details</li>
+            </ol>
+          </nav>
+
+          <h2 class="fw-bold mb-3">{{ hostel.name }}</h2>
+
+          <p class="text-muted mb-4">
+            <i class="bi bi-geo-alt-fill text-primary"></i>
+            {{ hostel.street }}, {{ hostel.area }}, {{ hostel.city }},
+            {{hostel.state }} - {{ hostel.pincode }}
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 mb-4">
+            <span class="amenity-pill">
+              <i class="bi bi-gender-ambiguous"></i>
+              {{ hostel.get_gender_display }}
+            </span>
+
+            <span class="amenity-pill">
+              <i class="bi bi-wifi"></i>
+              {% if hostel.wifi %} WiFi Available {% else %} No WiFi {% endif %}
+            </span>
+
+            <span class="amenity-pill">
+              <i class="bi bi-egg-fried"></i>
+              {% if hostel.food %} Food Included {% else %} No Food {% endif %}
+            </span>
+          </div>
+          <!-- <a
+            href="{% url 'owner:book_hostel' hostel.id %}"
+            class="btn btn-primary">
+            Request Booking
+          </a> -->
+          {% if user.is_authenticated %}
+          <button
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#hostelBookingModal">
+            Request Booking
+          </button>
+          {% else %}
+          <a href="{% url 'user:user_login' %}" class="btn btn-primary">
+            Request Booking
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <!-- LEFT SIDE -->
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+          <h4 class="fw-bold mb-4">About this Hostel</h4>
+          <p class="text-secondary">{{ hostel.description }}</p>
+        </div>
+
+        <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+          <h4 class="fw-bold mb-4">Facilities</h4>
+
+          <div class="row g-3">
+            {% if hostel.security %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-shield-check text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold"> CCTV Security</span>
+              </div>
+            </div>
+            {% endif %} {% if hostel.housekeeping %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-brush text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold"> Housekeeping</span>
+              </div>
+            </div>
+            {% endif %} {% if hostel.games %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-controller text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold"> Indoor Games</span>
+              </div>
+            </div>
+            {% endif %}{% if hostel.hotwater %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-droplet text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold"> Hot Water</span>
+              </div>
+            </div>
+            {% endif %}{% if hostel.parking %}
+            <div class="col-6 col-md-4">
+              <div class="p-3 border rounded text-center">
+                <i class="bi bi-car-front text-primary fs-4 mb-2"></i>
+                <span class="small fw-semibold"> Car/Bike Parking</span>
+              </div>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- MAP STATIC FOR NOW -->
+        <!-- <div class="card border-0 shadow-sm rounded-4 overflow-hidden mb-4">
+          <div class="p-4"><h4 class="fw-bold mb-0">Location</h4></div>
+          <iframe
+            width="100%"
+            height="350"
+            style="border: 0"
+            loading="lazy"></iframe>
+        </div> -->
+      </div>
+
+      <!-- RIGHT SIDE -->
+      <div class="col-lg-4">
+        <div class="sticky-sidebar">
+          <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+            <h5 class="fw-bold mb-3">Hostel Rules</h5>
+
+            {% if rules %}
+            <ul class="list-unstyled mb-0">
+              {% for r in rules %}
+              <li class="mb-2 d-flex align-items-start">
+                <i class="bi bi-info-circle text-primary me-2 mt-1"></i>
+                <span>{{ r.rule }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p class="text-muted">No rules added.</p>
+            {% endif %}
+          </div>
+
+          <a
+            href="javascript:history.back()"
+            class="btn btn-link mt-4 text-muted">
+            <i class="bi bi-arrow-left"></i> Back to listings
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="hostelBookingModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form method="POST" action="{% url 'owner:book_hostel' hostel.id %}" enctype="multipart/form-data">
+          {% csrf_token %}
+
+          <div class="modal-header text-dark">
+                          <h5 class="modal-title">Hostel Booking Details</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body text-dark">
+                          {% if messages %}
+                          <div class="mb-3">
+                            {% for message in messages %}
+                            <div
+                              class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show py-2 mb-2 small"
+                              role="alert">
+                              {{ message }}
+                              <button type="button" class="btn-close py-2" data-bs-dismiss="alert"></button>
+                            </div>
+                            {% endfor %}
+                          </div>
+                          {% endif %}
+                          <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input name="full_name" class="form-control" required placeholder="Enter your full name"
+                              pattern="[A-Za-z\s]{2,}" title="Minimum 2 characters, alphabets and spaces only" />
+                          </div>
+                          <div class="row mb-3">
+                            <div class="col">
+                              <label class="form-label">Age</label>
+                              <input name="age" class="form-control" type="number" required min="16" max="50" />
+                            </div>
+                            <div class="col">
+                              <label class="form-label">Gender</label>
+                              <select name="gender" class="form-select" required>
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Mobile</label>
+                            <input type="tel" name="phone" class="form-control" required pattern="[6789][0-9]{9}"
+                              maxlength="10" title="10 digit number starting with 6, 7, 8 or 9" />
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input name="email" class="form-control gmail-check" type="email" required
+                              pattern=".+@gmail\.com$" title="Only @gmail.com addresses are accepted"
+                              oninput="validateRoomGmail(this)" />
+                            <div class="gmail-error text-danger small mt-1" style="display: none;">
+                              Only @gmail.com email addresses are allowed.
+                            </div> 
+                          </div>
+                          <div class="mb-3">
+                            <label class="form-label">Message (optional)</label>
+                            <textarea name="message" class="form-control" rows="3"></textarea>
+                          </div>
+
+                          <div class="mb-3">
+                            <label class="form-label text-dark">Identity Proof (JPEG, Max 3MB)</label>
+                            <input type="file" name="identity_proof" class="form-control" accept="image/jpeg" required />
+                            <div class="form-text text-muted small">Upload Aadhar/Passport/PAN. JPEG only.</div>
+                          </div>
+                        </div>
+                        <div class="modal-footer">
+                          <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+                          <button class="btn btn-success px-4" type="submit">Submit Request</button>
+                        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include "core/footer.html" %}

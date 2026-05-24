@@ -1,0 +1,69 @@
+{% include "core/header.html" %}
+
+<div class="container py-5">
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h3 class="fw-bold m-0">
+      {% if city_name %} Search Results for
+      <span class="text-primary"
+        >{{ city_name }}{% if area_name %}, {{ area_name }}{% endif %}</span
+      >
+      {% else %} Search Results {% endif %}
+    </h3>
+    <a
+      href="{% url 'core_urls:home' %}"
+      class="btn btn-outline-secondary btn-sm rounded-pill px-3">
+      <i class="fas fa-arrow-left me-1"></i> New Search
+    </a>
+  </div>
+
+  {% if area_data %}
+  <div class="section-results mb-5">
+    <h5
+      class="text-muted fw-bold mb-3 border-start border-warning border-4 ps-3">
+      Top Matches in {{ area_name }}
+    </h5>
+    <div class="row g-4">
+      {% for data in area_data %}
+      <div class="col-md-6 col-lg-4">
+        {% include "core/partials/property_card.html" with data=data %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %} {% if city_data %}
+  <div class="section-results">
+    {% if area_data %}
+    <h5
+      class="text-muted fw-bold mb-3 border-start border-secondary border-4 ps-3">
+      Other Properties in {{ city_name }}
+    </h5>
+    {% else %}
+    <h5
+      class="text-muted fw-bold mb-3 border-start border-warning border-4 ps-3">
+      Verified Properties in {{ city_name }}
+    </h5>
+    {% endif %}
+    <div class="row g-4">
+      {% for data in city_data %}
+      <div class="col-md-6 col-lg-4">
+        {% include "core/partials/property_card.html" with data=data %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %} {% if not area_data and not city_data %}
+  <div class="text-center py-5">
+    <i class="fas fa-search-minus text-muted mb-3" style="font-size: 3rem"></i>
+    <p class="text-muted lead">
+      No verified PGs or Hostels found for your search.
+    </p>
+    <a
+      href="{% url 'core_urls:home' %}"
+      class="btn btn-warning px-4 rounded-pill"
+      >Try Another Search</a
+    >
+  </div>
+  {% endif %}
+</div>
+
+{% include "core/footer.html" %}

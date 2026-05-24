@@ -1,0 +1,143 @@
+{% load static %} {% include 'core/header.html' %}
+
+<style>
+  .about-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .about-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .icon-box {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    margin: 0 auto 20px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #0d6efd;
+  }
+</style>
+
+<section class="py-5 bg-white overflow-hidden">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+        <span
+          class="badge bg-primary-soft text-primary px-3 py-2 mb-3 rounded-pill"
+          >OUR STORY</span
+        >
+        <h1 class="display-4 fw-bold mb-4">We simplify student living.</h1>
+        <p class="lead text-muted mb-4">
+          RoomMate was born out of a simple idea: finding a safe, verified, and
+          comfortable place to stay shouldn't be a struggle. We bridge the gap
+          between students and trusted property owners.
+        </p>
+        <div class="d-flex gap-3">
+          <div class="text-center">
+            <div class="stat-number">100%</div>
+            <div class="small text-muted fw-bold text-uppercase">
+              Verified Listings
+            </div>
+          </div>
+          <div class="vr mx-3"></div>
+          <div class="text-center">
+            <div class="stat-number">24/7</div>
+            <div class="small text-muted fw-bold text-uppercase">
+              Support Ready
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 text-center" data-aos="zoom-in">
+        <img
+          src="/media/images/about-us.jpeg"
+          alt="Student Living Illustration"
+          class="img-fluid hero-img" />
+      </div>
+      <div class="col-lg-6" data-aos="zoom-in">
+        <lottie-player
+          src="{% static 'assets/about.json' %}"
+          background="transparent"
+          speed="1"
+          style="width: 100%; max-width: 500px; margin: auto"
+          loop
+          autoplay>
+        </lottie-player>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <h2 class="fw-bold">Why Choose RoomMate?</h2>
+      <p class="text-muted">Built for students, trusted by property owners.</p>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+        <div class="about-card text-center p-5 rounded-4 shadow-sm h-100">
+          <div class="icon-box bg-warning-light text-warning">
+            <i class="fas fa-shield-alt fs-2"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Verified Owners</h5>
+          <p class="text-muted">
+            We manually verify 100% of our room owners and property listings to
+            ensure your safety.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="about-card text-center p-5 rounded-4 shadow-sm h-100">
+          <div class="icon-box bg-primary-light text-primary">
+            <i class="fas fa-bed fs-2"></i>
+          </div>
+          <h5 class="fw-bold mb-3">Comfortable Living</h5>
+          <p class="text-muted">
+            Facilities curated to match the modern student lifestyle,
+            prioritizing hygiene and safety.
+          </p>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="about-card text-center p-5 rounded-4 shadow-sm h-100">
+          <div class="icon-box bg-success-light text-success">
+            <i class="fas fa-headset fs-2"></i>
+          </div>
+          <h5 class="fw-bold mb-3">24/7 Support</h5>
+          <p class="text-muted">
+            Our team is always available for seamless complaint resolution and
+            real-time updates.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-5 text-center" data-aos="zoom-in">
+  <div class="container py-4">
+    <h3 class="fw-bold mb-3">Ready to find your next home?</h3>
+    <a
+      href="{% url 'core:index' %}"
+      class="btn btn-primary btn-lg px-5 py-3 rounded-pill shadow"
+      >Browse Verified Rooms</a
+    >
+  </div>
+</section>
+
+{% include 'core/footer.html' %}
