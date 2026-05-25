@@ -18,7 +18,7 @@ pipeline {
 
         stage('Deploy using Ansible') {
     steps {
-        bat 'ansible-playbook -i localhost, deploy.yml'
+        bat 'wsl ansible-playbook -i localhost, deploy.yml'
     }
 }
     }
