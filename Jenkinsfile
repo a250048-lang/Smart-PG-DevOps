@@ -18,7 +18,7 @@ pipeline {
 
         stage('Deploy using Ansible') {
     steps {
-        bat 'wsl ansible-playbook -i localhost, deploy.yml'
+        bat 'wsl -d Ubuntu-22.04 ansible-playbook -i localhost, deploy.yml'
     }
 }
     }

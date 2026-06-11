@@ -1,11 +1,13 @@
 ---
 - hosts: localhost
   connection: local
+  gather_facts: no
 
   tasks:
 
     - name: Remove old container
-      shell: docker rm -f smartpg-container || true
+      shell: docker rm -f smartpg-container
+      ignore_errors: yes
 
     - name: Run new container
-      shell: docker run -d --name smartpg-container -p 8000:8000 smartpg
+      shell: docker run -d --name smartpg-container -p 8001:8000 smartpg
