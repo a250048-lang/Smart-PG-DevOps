@@ -16,10 +16,11 @@ pipeline {
             }
         }
 
-        stage('Deploy using Ansible') {
-    steps {
-        bat 'wsl -d Ubuntu-22.04 ansible-playbook -i localhost, deploy.yml'
-    }
-}
+        stage('Deploy') {
+            steps {
+                bat 'docker rm -f smartpg-container'
+                bat 'docker run -d --name smartpg-container -p 8000:8000 smartpg'
+            }
+        }
     }
 }
